@@ -7,6 +7,18 @@ body {
     margin: 0;
     padding: 0;
 }
+.left {
+    float: left;
+    text-align: left;
+}
+.right {
+    float: right;
+    text-align: right;
+}
+.center {
+    text-align: center;
+}
+
 input {
     display: block;
     margin: 0 auto;
@@ -16,4 +28,31 @@ button {
     display: block;
     margin: 0 auto;
     background-color: green;
+}
+footer {
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+footer div {
+    width: 50%;
+    float: left;
+    background-color: inherit;
+}
+footer div p {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 24px;
+}
+footer div p a {
+    color: white;
+    text-decoration: underline;
+}
+footer div p a:hover {
+    color: gold;
+    text-decoration: underline;
 }
