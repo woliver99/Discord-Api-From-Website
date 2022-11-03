@@ -29,14 +29,24 @@ button {
     margin: 0 auto;
     background-color: green;
 }
+#Log {
+    background-color: #fff;
+    border: 1px solid #000;
+    margin: 0 auto;
+    width: 40%;
+    height: 250px;
+    display: block;
+    resize: none;
+}
+/*Footer*/
 footer {
     background-color: #333;
     color: white;
+    display: flex;
     position: fixed;
+    height: auto;
     bottom: 0;
     width: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
 }
 footer div {
     width: 50%;

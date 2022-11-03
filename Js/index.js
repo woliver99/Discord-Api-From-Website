@@ -11,7 +11,25 @@ document.addEventListener("DOMContentLoaded", function () {
     var ToggleTypingButton = document.getElementById("ToggleTyping");
     var DiscordTokenInput = document.getElementById("DiscordToken");
     var ChannelIdInput = document.getElementById("ChannelId");
+    var LogOutput = document.getElementById("Log");
     
+    document.cookie.split("; ").forEach(function (cookie) {
+        var [key, value] = cookie.split("=");
+        if (key == "ChannelId") {
+            ChannelIdInput.value = value
+        } else if (key == "DiscordToken") {
+            DiscordTokenInput.value = value
+        }
+    });
+
+    function Log(Msg) {
+        if (LogOutput.value.length <= 0) {
+            LogOutput.value = Msg;
+        } else {
+            LogOutput.value = `${LogOutput.value}\r\n${Msg}`
+        }
+    }
+
     function StartLoop() {
         SendLoopEnabled = true;
         ToggleTypingButton.innerHTML = "Stop Typing";
@@ -25,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function SendTyping(Token, ChannelId) {
-        console.log(Token + " " + ChannelId);
         while (SendLoopEnabled == true) {
             try{
                 var Responce = fetch(ChannelUrl + ChannelId + TypingUrl, {
@@ -39,11 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (result.status != 204) {
                     await result.text().then(function (text) {
                         StopLoop();
-                        alert(`Error Sending Typing: ${text}`);
+                        Log(`Error Sending Typing: ${text}`);
                     });
-                };
+                } else {
+                    Log("Sent Typing");
+                }
             } catch (error) {
-                console.log("Stoped Error");
+                Log("Stoped Error");
             }
             await sleep(2000);
         };
@@ -57,5 +76,17 @@ document.addEventListener("DOMContentLoaded", function () {
             SendTyping(DiscordTokenInput.value, ChannelIdInput.value);
         };
     };
+
+    function ChannelIdInputted() {
+        document.cookie = `ChannelId=${ChannelIdInput.value}`;
+    };
+
+    function DiscordTokenInputted() {
+        document.cookie = `DiscordToken=${DiscordTokenInput.value}`;
+        console.log(document.cookie["DiscordToken"]);
+    };
+    
     ToggleTypingButton.addEventListener("click", WhenButtonClicked);
+    ChannelIdInput.addEventListener("input", ChannelIdInputted);
+    DiscordTokenInput.addEventListener("input", DiscordTokenInputted);
 });
